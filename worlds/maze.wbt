@@ -217,7 +217,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation 0 0.02600000000000192 0.02
+        translation 0 0.026000000000002143 0.02
         rotation 0 1 0 0.1596644573064529
         children [
           DEF EPUCK_WHEEL Pose {
