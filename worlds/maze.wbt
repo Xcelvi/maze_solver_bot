@@ -8,8 +8,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.5731532306660158 0.5965503900270791 0.5618033520153195 2.0833550979896813
-  position 0.001668012015161563 0.037147717904578645 1.599798086155635
+  orientation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.0944
+  position 0.0006007907278802617 1.2984511651261184e-05 1.5968325420935339
 }
 TexturedBackground {
 }
@@ -217,7 +217,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation 0 0.026000000000001796 0.02
+        translation 0 0.02600000000000192 0.02
         rotation 0 1 0 0.1596644573064529
         children [
           DEF EPUCK_WHEEL Pose {

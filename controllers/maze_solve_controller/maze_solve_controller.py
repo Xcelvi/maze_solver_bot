@@ -52,6 +52,30 @@ turn_aggression = .04
 #Set max velo to not break
 motor_limit = 6.28
 
+#Establish all states
+FOLLOW_WALL = 0
+TURN = 1
+
+state = FOLLOW_WALL
+
+#Follow wall state
+def follow_wall(right_sensor):
+    distance_from_ideal = target_distance - right_sensor
+    if (abs(distance_from_ideal) < 80):
+        distance_from_ideal = 0
+    turn_correction = distance_from_ideal * turn_aggression
+        
+    left_speed = max_speed + turn_correction
+    right_speed = max_speed - turn_correction
+        
+    left_speed = max(min(left_speed, motor_limit), -motor_limit)
+    right_speed = max(min(right_speed, motor_limit), -motor_limit)
+    return left_speed, right_speed
+#wall in front state
+def turn():
+    left_speed = -4
+    right_speed = 4
+    return left_speed, right_speed
 while robot.step(timestep) != -1:
     
     forward0 = int(ps0.getValue())
@@ -72,25 +96,24 @@ while robot.step(timestep) != -1:
     left_sensor = max(left0, left1)
     back_sensor = max(back0, back1)
     
-    # Turning amount and erros
-    if forward_sensor > 200:
-        left_motor.setVelocity(-4)
-        right_motor.setVelocity(4)
-        for i in range(30):
-            robot.step(timestep)
-        print("forward")
-    else:    
-        distance_from_ideal = target_distance - right_sensor
-        if (abs(distance_from_ideal) < 80):
-            distance_from_ideal = 0
-        turn_correction = distance_from_ideal * turn_aggression
-        
-        left_speed = max_speed + turn_correction
-        right_speed = max_speed - turn_correction
-        
-        left_speed = max(min(left_speed, motor_limit), -motor_limit)
-        right_speed = max(min(right_speed, motor_limit), -motor_limit)
-        print("Right", right_sensor, "left", left_sensor, "distance_from_ideal", distance_from_ideal)
+    # Change and check states
+    if state == FOLLOW_WALL:
+        print("state == follow_wall")
+        if forward_sensor > 200:
+            print("state == turn")
+            state = TURN
+    elif state == TURN:
+       left_speed, right_speed = turn()
+       left_motor.setVelocity(left_speed)
+       right_motor.setVelocity(right_speed)
+       for i in range(8):
+           robot.step(timestep)
+           continue
+       if forward_sensor < 100:
+           state = FOLLOW_WALL
+    if state == FOLLOW_WALL:
+        left_speed, right_speed = follow_wall(right_sensor)
+    
     left_motor.setVelocity(left_speed)
     right_motor.setVelocity(right_speed)
     
