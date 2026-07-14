@@ -4,12 +4,13 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Roughcast.proto"
 
 WorldInfo {
 }
 Viewpoint {
   orientation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.0944
-  position 0.0006007907278802617 1.2984511651261184e-05 1.5968325420935339
+  position 0.0006007907278778583 1.2984511647504707e-05 2.1134759251594875
 }
 TexturedBackground {
 }
@@ -40,19 +41,43 @@ Wall {
   size 0.01 0.2 0.1
 }
 Wall {
-  translation 0.060001 -0.39 0
+  translation 0.100001 -0.39 0
   rotation 0 0 1 1.5708
   name "wall(10)"
   size 0.01 0.2 0.1
 }
 Wall {
-  translation 0.260001 -0.39 0
+  translation 0.290001 -0.39 0
   rotation 0 0 1 1.5708
   name "wall(11)"
   size 0.01 0.2 0.1
 }
 Wall {
-  translation 0.210001 -0.39 0
+  translation 0.440001 -0.39 0
+  rotation 0 0 1 1.5708
+  name "wall(30)"
+  size 0.01 0.1 0.1
+  appearance Roughcast {
+    colorOverride 1 0 0
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation 0.490001 -0.35 0
+  rotation 0 0 -1 -5.307179586466759e-06
+  name "wall(31)"
+  size 0.01 0.1 0.1
+  appearance Roughcast {
+    colorOverride 1 0 0
+    textureTransform TextureTransform {
+      scale 2.4 1
+    }
+  }
+}
+Wall {
+  translation 0.060001 -0.39 0
   rotation 0 0 1 1.5708
   name "wall(12)"
   size 0.01 0.2 0.1
@@ -172,7 +197,7 @@ Wall {
   size 0.01 0.2 0.1
 }
 Wall {
-  translation 0.49 -0.29 0
+  translation 0.49 -0.2 0
   rotation 0 0 -1 -5.307179586466759e-06
   name "wall(13)"
   size 0.01 0.2 0.1
@@ -196,12 +221,12 @@ Wall {
   size 0.01 0.2 0.1
 }
 Robot {
-  translation -0.326604 0.439837 -0.000132624
-  rotation -0.06128110360061103 -0.09214068680305648 0.9938585010840085 0.001628203063276353
+  translation -0.264021 0.455506 0.00120187
+  rotation -0.0010327202183069983 0.004744531002947656 -0.9999882113877708 0.460015
   children [
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 0.15966445730645404
+        position 8.355076296243153
         axis 0 1 0
         anchor 0 0 0.02
       }
@@ -217,8 +242,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation 0 0.026000000000002143 0.02
-        rotation 0 1 0 0.1596644573064529
+        translation 0 0.026000000000002178 0.02
+        rotation 0 -1 0 4.21129431811602
         children [
           DEF EPUCK_WHEEL Pose {
             rotation 1 0 0 -1.570796
@@ -354,7 +379,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 0.15966445743645097
+        position 2.679636104227985
         axis 0 1 0
         anchor 0 0 0.02
       }
@@ -370,8 +395,8 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0 -0.026000000000000013 0.02
-        rotation 0 1 0 0.15966445743645127
+        translation 0 -0.026000000000000172 0.02
+        rotation 0 0.9999999999999999 0 2.679636104227985
         children [
           Pose {
             rotation 1 0 0 3.14159
@@ -1393,6 +1418,11 @@ Robot {
     DEF EPUCK_LS0 LightSensor {
       translation 0.03 -0.01 0.0329
       rotation -0.9777965085141309 0.1481799255178978 0.1481779255189031 -1.593259
+      children [
+        Camera {
+          name "cam0"
+        }
+      ]
       name "ls0"
       lookupTable [
         1 4095 0.01
@@ -1402,6 +1432,11 @@ Robot {
     DEF EPUCK_LS1 LightSensor {
       translation 0.022 -0.025 0.0329
       rotation 0.8580286389133098 -0.36317084716575504 -0.3631718471653342 1.723331
+      children [
+        Camera {
+          name "cam1"
+        }
+      ]
       name "ls1"
       lookupTable [
         1 4095 0.01
@@ -1447,6 +1482,11 @@ Robot {
     DEF EPUCK_LS6 LightSensor {
       translation 0.022 0.025 0.0329
       rotation 0.8585326142982999 0.3625718371121007 0.3625788371089559 1.722748
+      children [
+        Camera {
+          name "cam2"
+        }
+      ]
       name "ls6"
       lookupTable [
         1 4095 0.01
@@ -1456,6 +1496,11 @@ Robot {
     DEF EPUCK_LS7 LightSensor {
       translation 0.03 0.01 0.0329
       rotation -0.9780278783524109 -0.1474109816649495 -0.1474159816643276 -1.593022
+      children [
+        Camera {
+          name "cam3"
+        }
+      ]
       name "ls7"
       lookupTable [
         1 4095 0.01

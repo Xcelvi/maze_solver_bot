@@ -6,6 +6,10 @@ maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: 0 "controllers/maze_solve_controller/maze_solve_controller.py"
-globalOptionalRendering: CoordinateSystem::DistanceSensorRays
+globalOptionalRendering: CoordinateSystem::LightSensorRays
 consoles: Console:All:All
-renderingDevicePerspectives: e-puck:camera;1;1;0;0
+renderingDevicePerspectives: e-puck:cam0;0;4.04688;0.225624;0.0572917
+renderingDevicePerspectives: e-puck:cam1;0;1.8125;0;0
+renderingDevicePerspectives: e-puck:cam2;0;3.57813;0;0
+renderingDevicePerspectives: e-puck:cam3;0;3.15625;0;0
+renderingDevicePerspectives: e-puck:camera;0;5.89744;0;0

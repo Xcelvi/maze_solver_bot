@@ -30,7 +30,17 @@ ps7 = robot.getDevice('ps7')
 ps7.enable(timestep)
 ps8 = robot.getDevice('ps8')
 ps8.enable(timestep)
-#setup motors
+
+#Setup cameras for finish
+cam0 = robot.getDevice('cam0')
+cam0.enable(timestep)
+cam1 = robot.getDevice('cam1')
+cam1.enable(timestep)
+cam2 = robot.getDevice('cam2')
+cam2.enable(timestep)
+cam3 = robot.getDevice('cam3')
+cam3.enable(timestep)
+
 left_motor = robot.getDevice('left wheel motor')
 right_motor = robot.getDevice('right wheel motor')
 left_motor.setPosition(float('inf'))
@@ -77,7 +87,7 @@ def turn():
     right_speed = 4
     return left_speed, right_speed
 while robot.step(timestep) != -1:
-    
+    #Setup all distance sensors
     forward0 = int(ps0.getValue())
     forward1 = int(ps8.getValue())
     forward2 = int(ps7.getValue())
@@ -96,6 +106,14 @@ while robot.step(timestep) != -1:
     left_sensor = max(left0, left1)
     back_sensor = max(back0, back1)
     
+    #Setup light sensors
+    front_cam0 = cam0.getImage()
+    front_cam1 = cam1.getImage()
+    front_cam2 = cam2.getImage()
+    front_cam3 = cam3.getImage()
+    
+    front_cam = [front_cam0, front_cam1, front_cam2, front_cam3]
+    
     # Change and check states
     if state == FOLLOW_WALL:
         print("state == follow_wall")
@@ -108,7 +126,6 @@ while robot.step(timestep) != -1:
        right_motor.setVelocity(right_speed)
        for i in range(8):
            robot.step(timestep)
-           continue
        if forward_sensor < 100:
            state = FOLLOW_WALL
     if state == FOLLOW_WALL:
@@ -116,7 +133,33 @@ while robot.step(timestep) != -1:
     
     left_motor.setVelocity(left_speed)
     right_motor.setVelocity(right_speed)
+    #Setup camera and comparisons
+    width = cam0.getWidth()
+    height = cam0.getHeight()
+    x = width //2
+    y = height //2
+    red0 = cam0.imageGetRed(front_cam0, width, x, y)
+    green0 = cam0.imageGetGreen(front_cam0, width, x, y)    
+    blue0 = cam0.imageGetBlue(front_cam0, width, x, y)  
+
+    red1 = cam1.imageGetRed(front_cam1, width, x, y)
+    green1 = cam1.imageGetGreen(front_cam1, width, x, y)    
+    blue1 = cam1.imageGetBlue(front_cam1, width, x, y)  
+    red2 = cam2.imageGetRed(front_cam2, width, x, y)
+    green2 = cam2.imageGetGreen(front_cam2, width, x, y)    
+    blue2 = cam2.imageGetBlue(front_cam2, width, x, y)  
+    red3 = cam3.imageGetRed(front_cam3, width, x, y)
+    green3 = cam3.imageGetGreen(front_cam3, width, x, y)    
+    blue3 = cam3.imageGetBlue(front_cam3, width, x, y)  
     
+    red_total = red0+red1+red2+red3
+    green_blue_total = blue0 +blue1+blue2+blue3+green0+green1+green2+green3
+    print(red_total, green_blue_total)
+    if red_total > (green_blue_total):
+        print("Total time", robot.getTime())
+        left_motor.setVelocity(0)
+        right_motor.setVelocity(0)
+        break
     pass
 
 # Enter here exit cleanup code.
